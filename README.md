@@ -1,8 +1,8 @@
-# json2excel
+# 🔄 json2excel
 
 JSONファイルをExcelファイルに変換する
 
-## Description
+## :memo:  Description
 
 - JSONをEXCELに変換するAPI
 - 変換の定義はYAMLで定義します
@@ -10,13 +10,19 @@ JSONファイルをExcelファイルに変換する
 - JSON 2 EXCEL までの処理や、既存のExcelファイルへハイパーリンクの設定のみ行う処理も実行できます
 - APIはFastAPIを使ってます
 
-## Getting Started
+## 🚀 Getting Started
 
 ### local
 
-1. cd docker
-2. docker compose up -d
-3. http://localhost:1239/docs/
+1. 🐳 コンテナを起動します
+```sh
+$ cd docker
+$ docker compose up -d
+```
+
+2. ブラウザで以下にアクセスします
+http://localhost:1239/docs/
+
 
 <!-- ### PaaS
 
