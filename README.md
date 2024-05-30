@@ -20,7 +20,7 @@ $ cd docker
 $ docker compose up -d
 ```
 
-2. ブラウザで以下にアクセスします
+2. ブラウザで以下にアクセスします  
 http://localhost:1239/docs/
 
 
