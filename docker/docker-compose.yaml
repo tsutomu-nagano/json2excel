@@ -1,0 +1,59 @@
+version: "3.8"
+services:
+  buildcontainer:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: json2excel
+    container_name: j2e-build
+
+    stdin_open: true
+    tty: true
+      
+    volumes:
+      - ..:/code
+    
+    command: "/bin/bash"
+
+  devcontainer:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: json2excel
+    container_name: j2e-dev
+
+    stdin_open: true
+    tty: true
+
+    environment:
+      - PYTHONPATH=/code/app
+
+    ports:
+      - "1239:80"
+      
+    volumes:
+      - ../json2excel:/code/app
+      - ../sample:/code/sample
+
+    # command: "/bin/bash"
+
+  # testcontainer:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/Dockerfile.test
+  #   image: e2j-test
+  #   container_name: j2e-test
+
+  #   stdin_open: true
+  #   tty: true
+
+  #   # environment:
+  #   #   - PYTHONPATH=/code/app
+
+  #   volumes:
+  #     - ../json2excel:/code/app
+  #     - ../tests:/code/tests
+
+  #   command: "/bin/bash"
+  
+

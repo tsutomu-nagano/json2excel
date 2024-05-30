@@ -1,0 +1,6 @@
+FROM e2j
+
+ENV PYTHONPATH /code/app
+
+RUN pip install --no-cache-dir --upgrade pytest
+

@@ -1,0 +1,52 @@
+
+
+
+header:
+  hoge:
+    type: cell
+    sheet: Sheet1
+    address: B1
+
+items:
+  type: table
+  sheet: Sheet1
+  address: C5
+  colmap:
+    - ja: 
+        text: A
+      var: col_a
+
+    - ja:
+        text: B
+      var: col_b
+
+codelist:
+  type: list
+  sheet: "^[0-9]+$"
+  listitem:
+    statcode:
+      type: cell
+      address: B2
+    
+    key:
+      type: cell
+      address: B3
+    
+    items:
+      type: table
+      address: A7
+      colmap:
+        - ja: 
+            re: (F|f)1
+          var: code
+          require:
+          format:
+            wide_to_narrow: True
+
+        - ja:
+            text: F2
+          var: content
+
+        - ja:
+            text: F3
+          var: note

@@ -1,0 +1,9 @@
+fastapi
+pydantic
+uvicorn
+pandas
+python-multipart
+openpyxl
+xlwt
+requests
+pyyaml

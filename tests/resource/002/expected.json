@@ -1,0 +1,39 @@
+
+
+
+{
+    "header":{
+        "hoge": "123"
+    },
+
+    "items": [
+        {"col_a": "ABC", "col_b":"dd","F1":"Fuga","D":"1","E":"aa"},
+        {"col_a": "", "col_b":"","F1":"","D":"2","E":"あい"},
+        {"col_a": "", "col_b":"","F1":"","D":"3","E":"う"},
+        {"col_a": "", "col_b":"","F1":"","D":"4","E":"こ"}
+    ],
+
+    "codelist": [
+        {
+            "statcode": "000001",
+            "key":"1",
+            "items":[
+                {"code":"01","content":"男","note":""},
+                {"code":"02","content":"女","note":"メモ"},
+                {"code":"03","content":"その他","note":""}
+            ]
+        },
+        
+        {
+            "statcode": "000001",
+            "key":"2",
+            "items":[
+                {"code":"1","content":"中卒","note":""},
+                {"code":"2","content":"高卒","note":""},
+                {"code":"3","content":"大卒","note":"AAA"}
+            ]
+        }
+
+    ]
+}
+
