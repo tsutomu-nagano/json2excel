@@ -11,3 +11,28 @@ hyperlink:
         text: "$."
       address: B3
     direction: both
+
+border:
+  - sheet:
+      re: "^[0-9]+$"
+    address: C8:$auto
+    draw:
+      - grid-dashed
+      - around-thin
+
+  - sheet:
+      re: "^[0-9]+$"
+    address: C8:$auto-col
+    draw:
+      - bottom-double
+
+fill:
+  - sheet:
+      re: "^[0-9]+$"
+    address: C8:$auto-col
+    color:
+      - text:
+          match:
+            - "AA"
+            - "D"
+        value: "CCFFCC"

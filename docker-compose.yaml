@@ -2,7 +2,7 @@ version: "3.8"
 services:
   buildcontainer:
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile
     image: json2excel
     container_name: j2e-build
@@ -11,7 +11,7 @@ services:
     tty: true
       
     volumes:
-      - ..:/code
+      - .:/code
     
     command: "/bin/bash"
 
@@ -32,8 +32,8 @@ services:
       - "1239:80"
       
     volumes:
-      - ../json2excel:/code/app
-      - ../sample:/code/sample
+      - ./json2excel:/code/app
+      - ./sample:/code/sample
 
     # command: "/bin/bash"
 
