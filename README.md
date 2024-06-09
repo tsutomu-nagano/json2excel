@@ -16,7 +16,6 @@ JSONファイルをExcelファイルに変換する
 
 1. 🐳 コンテナを起動します
 ```sh
-$ cd docker
 $ docker compose up -d
 ```
 
