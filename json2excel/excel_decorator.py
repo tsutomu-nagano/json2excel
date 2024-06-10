@@ -43,31 +43,30 @@ class ExcelDecorator():
         if "hyperlink" in deco:
             for hyperlink in deco["hyperlink"]:
 
-                from_sheet_info = hyperlink["from"]["sheet"]
-                from_address = hyperlink["from"]["address"]
-                to_sheet_info = hyperlink["to"]["sheet"]
-                to_address = hyperlink["to"]["address"]
+                sheet_names = ExcelDecorator.get_sheet_names(wb, hyperlink["sheet"])
+                link = hyperlink["link"]
+                to_address = link["address"]
 
-                for r in utils.a1_to_range(from_address):
+                for sheet_name in sheet_names:
 
-                    cell = wb[from_sheet_info["text"]][r["address"]]
+                    ranges = utils.a1_to_range(utils.convert_auto_range(hyperlink["address"], dest, sheet_name))
 
-                    if to_sheet_info["text"] == "$.":
-                        to_sheet = cell.value
+                    for r in ranges:
+                        cell = wb[sheet_name][r["address"]]
 
+                        to_sheet =  cell.value if link["sheet"]["text"] == "$." else link["sheet"]["text"]
 
-                    if to_sheet in wb.sheetnames:
+                        if to_sheet in wb.sheetnames:
 
-                        cell.hyperlink = f"#{to_sheet}!{to_address}"
-                        cell.font = openpyxl.styles.Font(color="0000FF", underline="single")
+                            cell.hyperlink = f"#'{to_sheet}'!{to_address}"
+                            cell.font = openpyxl.styles.Font(color="0000FF", underline="single")
 
-                        if "direction" in hyperlink:
-                            direction = hyperlink["direction"]
-                            if direction == "both":
-                                
-                                cell = wb[to_sheet][to_address]
-                                cell.hyperlink = f"#{from_sheet_info['text']}!{r['address']}"
-                                cell.font = openpyxl.styles.Font(color="0000FF", underline="single")
+                            if "direction" in link:
+                                direction = link["direction"]
+                                if direction == "both":
+                                    cell = wb[to_sheet][to_address]
+                                    cell.hyperlink = f"#'{sheet_name}'!{r['address']}"
+                                    cell.font = openpyxl.styles.Font(color="0000FF", underline="single")
 
         if "border" in deco:
             for border in deco["border"]:

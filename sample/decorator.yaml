@@ -2,15 +2,14 @@
 
 
 hyperlink:
-  - from:
-      sheet:
-        text: Sheet1
-      address: G6:G9
-    to:
+  - sheet:
+      text: Sheet1
+    address: G6:$auto-row
+    link:
       sheet:
         text: "$."
       address: B3
-    direction: both
+      direction: both
 
 border:
   - sheet:
