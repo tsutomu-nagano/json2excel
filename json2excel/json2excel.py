@@ -66,11 +66,11 @@ class JSON2Excel():
 
 
                     with pd.ExcelWriter(dest, engine='openpyxl', mode="a", if_sheet_exists='overlay') as writer:
-                        pd.DataFrame([df.columns.values]).to_excel(writer, sheet_name=sheet, startrow=r["row"] - 1, startcol=r["col"], index=False, header = False)
+                        pd.DataFrame([df.columns.values]).to_excel(writer, sheet_name=sheet, startrow=r["row"] - 1, startcol=r["col"] - 1, index=False, header = False)
 
 
                     with pd.ExcelWriter(dest, engine='openpyxl', mode="a", if_sheet_exists='overlay') as writer:
-                        df.to_excel(writer, sheet_name=sheet, startrow=r["row"], startcol=r["col"], index=False, header = False)
+                        df.to_excel(writer, sheet_name=sheet, startrow=r["row"], startcol=r["col"] - 1, index=False, header = False)
 
 
                 if conv_type == "list":
