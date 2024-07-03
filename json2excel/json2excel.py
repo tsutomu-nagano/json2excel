@@ -36,7 +36,7 @@ class JSON2Excel():
 
 
     @staticmethod
-    def json_with_yaml2xls_core(y, j, dest, sheet = ""):
+    def json_with_yaml2xls_core(y, j, wb, sheet = ""):
         if isinstance(y, dict):
             if "type" in y:
                 conv_type = y["type"]
@@ -47,10 +47,10 @@ class JSON2Excel():
                 if conv_type == "cell":
                     sheet = y["sheet"]
                     address = y["address"]
-                    wb = openpyxl.load_workbook(dest)
+                    # wb = openpyxl.load_workbook(dest)
                     wb[sheet][address].value = j
-                    wb.save(dest)
-                    wb.close()
+                    # wb.save(dest)
+                    # wb.close()
 
                 
                 if conv_type == "table":
@@ -64,13 +64,19 @@ class JSON2Excel():
                     # 名前変換
                     df = JSON2Excel.rename_header(df, colmaps)
 
+                    ws = wb[sheet]
+                    for idx, value in enumerate(df.columns.values):
+                        ws.cell(row = r["row"], column= r["col"] + idx, value = value)
+                    # with pd.ExcelWriter(wb, engine='openpyxl', mode="a", if_sheet_exists='overlay') as writer:
+                    #     pd.DataFrame([df.columns.values]).to_excel(writer, sheet_name=sheet, startrow=r["row"] - 1, startcol=r["col"] - 1, index=False, header = False)
 
-                    with pd.ExcelWriter(dest, engine='openpyxl', mode="a", if_sheet_exists='overlay') as writer:
-                        pd.DataFrame([df.columns.values]).to_excel(writer, sheet_name=sheet, startrow=r["row"] - 1, startcol=r["col"] - 1, index=False, header = False)
 
+                    for i, row in df.iterrows():
+                        for j, value in enumerate(row):
+                            ws.cell(row=r["row"] + 1 + i, column=r["col"] + j, value=value)
 
-                    with pd.ExcelWriter(dest, engine='openpyxl', mode="a", if_sheet_exists='overlay') as writer:
-                        df.to_excel(writer, sheet_name=sheet, startrow=r["row"], startcol=r["col"] - 1, index=False, header = False)
+                    # with pd.ExcelWriter(wb, engine='openpyxl', mode="a", if_sheet_exists='overlay') as writer:
+                    #     df.to_excel(writer, sheet_name=sheet, startrow=r["row"], startcol=r["col"] - 1, index=False, header = False)
 
 
                 if conv_type == "list":
@@ -79,24 +85,23 @@ class JSON2Excel():
                     sheet_name_from = m.group("name")
                     template_sheet_name = m.group("template")
 
-                    wb = openpyxl.load_workbook(dest)
+                    # wb = openpyxl.load_workbook(dest)
                     ws_temp = wb[template_sheet_name]
                     for j_ in j:
                         ws_copy = wb.copy_worksheet(ws_temp)
                         ws_copy.title = j_[sheet_name_from]
 
-                    wb.save(dest)
-                    wb.close()
+                    # wb.save(dest)
+                    # wb.close()
 
                     for j_ in j:
                         sheet = j_[sheet_name_from]
-
-                        JSON2Excel.json_with_yaml2xls_core(copy.deepcopy(y["listitem"]), j_ , dest, sheet) 
+                        JSON2Excel.json_with_yaml2xls_core(copy.deepcopy(y["listitem"]), j_ , wb, sheet) 
 
 
             else:
                 for k in y:
-                    JSON2Excel.json_with_yaml2xls_core(y[k], j[k], dest, sheet)
+                    JSON2Excel.json_with_yaml2xls_core(y[k], j[k], wb, sheet)
 
 
     @classmethod
@@ -105,11 +110,17 @@ class JSON2Excel():
         with open(config, 'r') as ymlf, \
              open(src, 'r') as jsonf:
 
+            wb = openpyxl.load_workbook(dest)
+
+
             cls.json_with_yaml2xls_core(
                 y = yaml.safe_load(ymlf),
                 j = json.load(jsonf),
-                dest = dest
+                wb = wb
             )
+
+            wb.save(dest)
+            wb.close()
 
 
 if __name__ == "__main__":
