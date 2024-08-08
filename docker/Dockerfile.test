@@ -1,4 +1,4 @@
-FROM e2j
+FROM json2excel:latest
 
 ENV PYTHONPATH /code/app
 

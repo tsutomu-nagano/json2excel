@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   buildcontainer:
     build:
@@ -17,7 +16,7 @@ services:
 
   devcontainer:
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile
     image: json2excel
     container_name: j2e-dev
@@ -37,23 +36,24 @@ services:
 
     # command: "/bin/bash"
 
-  # testcontainer:
-  #   build:
-  #     context: ..
-  #     dockerfile: docker/Dockerfile.test
-  #   image: e2j-test
-  #   container_name: j2e-test
+  testcontainer:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.test
+    image: e2j-test
+    container_name: j2e-test
 
-  #   stdin_open: true
-  #   tty: true
+    stdin_open: true
+    tty: true
 
-  #   # environment:
-  #   #   - PYTHONPATH=/code/app
+    # environment:
+    #   - PYTHONPATH=/code/app
 
-  #   volumes:
-  #     - ../json2excel:/code/app
-  #     - ../tests:/code/tests
+    volumes:
+      - ./json2excel:/code/app
+      - ./tests:/code/tests
 
-  #   command: "/bin/bash"
-  
+    command: "/bin/bash"
+
+
 
