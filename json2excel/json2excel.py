@@ -7,12 +7,12 @@ import sys
 import copy
 import shutil
 import utils
-from typing import List
+from typing import Dict
 from excel_decorator import ExcelDecorator
 
 class JSON2Excel():
 
-    __template_sheet_names : List[str] = []
+    __template_sheet_names : Dict[str, str] = {}
 
     @staticmethod
     def rename_header(df, colmaps):
@@ -88,7 +88,7 @@ class JSON2Excel():
                     sheet_name_from = m.group("name")
                     template_sheet_name = m.group("template")
 
-                    cls.__template_sheet_names.append(template_sheet_name)
+                    cls.__template_sheet_names.setdefault(template_sheet_name, "")
 
                     # wb = openpyxl.load_workbook(dest)
                     ws_temp = wb[template_sheet_name]
@@ -124,7 +124,7 @@ class JSON2Excel():
                 wb = wb
             )
 
-            [wb.remove(wb[s]) for s in cls.__template_sheet_names]
+            [wb.remove(wb[s]) for s in cls.__template_sheet_names.keys()]
 
             wb.save(dest)
             wb.close()
